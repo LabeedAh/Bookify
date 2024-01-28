@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"
+            rel="stylesheet"
+        />
+        <!-- External CSS -->
+        <link rel="stylesheet" href="./css/style.css" />
+        <title>Bookify</title>
+    </head>
+    <body>
+        <div class="bookify-bg p-4">
+            <div
+                class="container mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 mb-8"
+            >
+                <!-- First Child Div -->
+                <div class="p-4">
+                    <!-- Logo  -->
+                    <div id="logo">
+                        <img
+                            class=""
+                            src="https://i.postimg.cc/pLBJH8PR/logo.png"
+                            alt="Bookify Logo"
+                        />
+                    </div>
+                    <div>
+                        <h2 class="text-4xl mt-8">
+                            Schedule Your Appointment Today.
+                        </h2>
+                        <p class="mt-8 text-2xl">
+                            No-cost and no-obligation consultation with a Bookify Team
+                            Square specialist.
+                        </p>
+                        <ul class="list-outside mt-6">
+                            <li class="mt-4 text-orange-500 list-disc">
+                                <p class="list-text text-xl font-light">
+                                    Enter your contact information.
+                                </p>
+                            </li>
+                            <li class="mt-4 text-orange-500 list-disc">
+                                <p class="list-text text-xl">
+                                    Choose a date and time that's convenient for you.
+                                </p>
+                            </li>
+                            <li class="mt-4 text-orange-500 list-disc">
+                                <p class="list-text text-xl">
+                                    Meet with our specialist and discover why we're
+                                    one of the nation's largest and most trusted
+                                    impact bookify companies.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-10">
+                        <img
+                            src="https://i.postimg.cc/W4b6b34r/loginbg.png"
+                            alt="Calendar"
+                        />
+                    </div>
+                </div>
+
+                <!-- Second Child Div -->
+                <div class="p-4">
+                    <!-- Form -->
+                    <div
+                        class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg padding-form"
+                    >
+                        <h2 class="text-4xl font-semibold mb-4 text-center">
+                            Provide Your Information
+                        </h2>
+                        <div class="separator-line mx-auto my-4"></div>
+                        <p class="text-center text-base">
+                            We have developed the largest selection of impact products
+                            with the most comprehensive warranties in the industry.
+                        </p>
+
+                        <!-- Form -->
+                        <form class="mt-6" id="appointmentForm">
+                            <!-- Name Input -->
+                            <div class="mb-5">
+                                <label for="name" class="block mx-4">Name</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Enter your name"
+                                    class="form-input mt-1 p-2 w-full border rounded-md inputs-border"
+                                />
+                            </div>
+
+                            <!-- Age Input -->
+                            <div class="mb-5">
+                                <label for="age" class="block mx-4">Age</label>
+                                <input
+                                    type="age"
+                                    id="age"
+                                    name="age"
+                                    placeholder="Enter your age"
+                                    class="form-input mt-1 p-2 w-full border rounded-md inputs-border"
+                                />
+                            </div>
+
+                            <!-- Phone Number Input -->
+                            <div class="mb-5">
+                                <label for="phone" class="block mx-4"
+                                    >Cell Phone</label
+                                >
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="Enter your phone number"
+                                    class="form-input mt-1 p-2 w-full border rounded-md inputs-border"
+                                />
+                            </div>
+
+                            <!-- Address Input -->
+                            <div class="mb-5">
+                                <label for="address" class="block mx-4"
+                                    >Address</label
+                                >
+                                <input
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    placeholder="Enter your address"
+                                    class="form-input mt-1 p-2 w-full border rounded-md inputs-border"
+                                />
+                            </div>
+
+                            <!-- Calendar Input -->
+                            <div
+                                class="max-w-md mx-auto bg-white p-3 rounded-lg calendar-height"
+                            >
+                                <label for="date" class="block">Select Date:</label>
+                                <input
+                                    type="date"
+                                    id="date"
+                                    required
+                                    class="form-input mt-1 p-2 w-full border rounded-md inputs-border"
+                                />
+                                <div id="slots" class="mb-4 mt-4 text-center"></div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button
+                                type="submit"
+                                class="btn-bg text-white py-2 mt-3 px-4 rounded-md hover:bg-blue-600 w-full"
+                            >
+                                Submit
+                            </button>
+                        </form>
+                        <!-- Calendar -->
+                    </div>
+                    <p class="text-center mt-4 text-xs">
+                        Copyright (c) 2021 Bookify Team Square
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Display table for scheduled appointments -->
+        <div class="table-body">
+            <h2 class="text-center mt-6 text-4xl mb-3">Appointments Database</h2>
+            <div class="overflow-x-auto">
+                <table
+                    class="table-auto w-full border-collapse border border-gray-300"
+                >
+                    <thead>
+                        <tr class="">
+                            <th class="px-4 py-2 border-b border-gray-300">Name</th>
+                            <th class="px-4 py-2 border-b border-gray-300">Age</th>
+                            <th class="px-4 py-2 border-b border-gray-300">
+                                Cell Phone
+                            </th>
+                            <th class="px-4 py-2 border-b border-gray-300">Adress</th>
+                            <th class="px-4 py-2 border-b border-gray-300">Date</th>
+                            <th class="px-4 py-2 border-b border-gray-300">Slot</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentData" class="text-center">
+                        <!-- Table body -->
+                        <tr class="border-b border-gray-300"></tr>
+                        <!-- Add more rows here if needed -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+        <script src="./js/index.js"></script>
+    </body>
+</html>

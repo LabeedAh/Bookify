@@ -1,0 +1,64 @@
+/* common css */
+@import url(https://db.onlinewebfonts.com/c/5ab21e5fd6ce76e3b7a7d42cbf75bb39?family=Arquitecta+W00+Bold);
+::placeholder {
+    color: #000000 !important;
+    opacity: 0.3 !important;
+  }
+
+.btn-bg {
+    background-color: #F05523;
+}
+
+body {
+    font-family: "Arquitecta W00 Bold";
+    color: #000000;
+}
+
+/* Tailwind css */
+.rounded-md {
+    border-radius: 1.375rem 
+}
+.max-w-md {
+    max-width: 32rem;
+}
+
+/* Main background  */
+.bookify-bg {
+    background-color: #fee4d5;
+    padding: 4rem ;
+}
+
+/* App css */
+span {
+    color: #F05523;
+}
+
+.list-text {
+    color: #000;
+}
+
+.inputs-border {
+    border: 1px solid #F05523;
+}
+
+.separator-line {
+    border: 1px solid #F05523;
+    width: 50%;
+}
+
+.padding-form {
+    padding-bottom: 3rem;
+    padding-top: 3rem;
+}
+
+/* Calendar CSS */
+.calendar-height {
+    height: 13rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+/* Table CSS */
+.table-body {
+    border: 2px solid #F05523;
+    padding-bottom: 30px;
+}
