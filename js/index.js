@@ -116,6 +116,6 @@ picker.addEventListener('input', function(e){
   if([6,0].includes(day)){
     e.preventDefault();
     this.value = '';
-    alert('Weekends not allowed');
+    alert('Weekends are off...');
   }
 });
