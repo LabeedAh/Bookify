@@ -107,3 +107,15 @@ const maxDate = sevenDays.toISOString().split("T")[0];
 
 document.getElementById("date").setAttribute("min", minDate);
 document.getElementById("date").setAttribute("max", maxDate);
+
+
+//For disabeling the Weekends
+const picker = document.getElementById('date');
+picker.addEventListener('input', function(e){
+  var day = new Date(this.value).getUTCDay();
+  if([6,0].includes(day)){
+    e.preventDefault();
+    this.value = '';
+    alert('Weekends not allowed');
+  }
+});
