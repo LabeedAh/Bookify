@@ -1,7 +1,9 @@
 const appointments = [];
+let editIndex = '';
 const form = document.getElementById("appointmentForm");
 const slotsDiv = document.getElementById("slots");
 const tableBody = document.getElementById("appointmentData");
+// let arrPackages = [];
 
 function GetValue(inputName) {
     return document.getElementById(inputName).value;
@@ -17,7 +19,9 @@ function RenderAppointment(appointment) {
         <td>${address}</td>
         <td>${date}</td>
         <td>${slot}</td>
-    `;
+        <td><button onclick="DeleteAp(${appointments.indexOf(appointment)})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button></td>
+        <td><button onclick="EditAp(${appointments.indexOf(appointment)})" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Edit</button></td>
+        `;
 
     tableBody.appendChild(row);
 }
@@ -49,10 +53,22 @@ function AppointmentFormSubmit(event) {
         slot: slot.value,
     };
 
-    appointments.push(newAppointment);
-    RenderAppointment(newAppointment);
-    form.reset();
-    slotsDiv.innerHTML = "";
+    // Check if we're editing an existing appointment
+    if (editIndex !== '') {
+        // Update existing appointment data
+        appointments[editIndex] = newAppointment;
+        // Re-render the updated appointment
+        document.getElementById("appointmentData").innerHTML = '';
+        appointments.forEach((appointment, index) => {
+            RenderAppointment(appointment, index);
+        });
+        // Clear editIndex
+        editIndex = '';
+    } else {
+        // Add new appointment
+        appointments.push(newAppointment);
+        RenderAppointment(newAppointment);
+    }
 }
 
 function RenderSlots(selectedDate) {
@@ -77,6 +93,50 @@ function RenderSlots(selectedDate) {
         slotsDiv.appendChild(slotContainer);
     });
 }
+
+function DeleteAp(index) {
+    
+    var a = confirm("Are you sure?");
+    if (!a) return;
+    appointments.splice(index, 1);
+
+    document.getElementById("appointmentData").innerHTML = '';
+    console.log(appointments);
+    
+    appointments.forEach((p, index) => {
+        RenderAppointment(p, index,0);
+      
+    });
+}
+
+function EditAp(index) {
+    const appoint = appointments[index];
+
+    // Assuming 'slot' is a property of the 'appoint' object
+    const slotValue = appoint.slot;
+
+    // Update the value of the input element with the name 'slot'
+    const slotInputs = document.querySelectorAll("input[name='slot']");
+    slotInputs.forEach(input => {
+        if (input.value === slotValue) {
+            input.checked = true; // Assuming 'slot' is for radio buttons
+        }
+    });
+
+    // Assuming other properties of the appointment object are directly linked to input elements with corresponding IDs
+    for (let key in appoint) {
+        if (key !== 'slot') {
+            const value = appoint[key];
+            const element = document.getElementById(key);
+            if (element) {
+                element.value = value;
+            }
+        }
+    }
+
+    editIndex = index;
+}
+
 
 function AvailableSlots(date) {
     const dayOfWeek = new Date(date).getDay();
@@ -119,3 +179,19 @@ picker.addEventListener('input', function(e){
     alert('Weekends are off...');
   }
 });
+
+// const arrPackages = appointments; // Assuming your appointments array is named 'appointments'
+
+// function findCustomer() {
+//     const dat = document.getElementById('findByDate').value;
+//     const foundCustomer = appointments.filter(appointment => appointment.date === dat);
+
+//     if (foundCustomer.length === 0) {
+//         alert('No Customer found');
+//         // Optionally, you can display all appointments if none are found
+//         PrintPackagesInfo(appointments);
+//         return;
+//     }
+
+//     RenderAppointment(foundCustomer);
+// }
