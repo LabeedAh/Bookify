@@ -94,6 +94,7 @@ function RenderSlots(selectedDate) {
     });
 }
 
+// Delete Function 
 function DeleteAp(index) {
     
     var a = confirm("Are you sure?");
