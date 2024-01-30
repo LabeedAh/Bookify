@@ -13,14 +13,14 @@ function RenderAppointment(appointment) {
     const row = document.createElement("tr");
     const { name, age, phone, address, date, slot } = appointment;
     row.innerHTML = `
-        <td>${name}</td>
-        <td>${age}</td>
-        <td>${phone}</td>
-        <td>${address}</td>
-        <td>${date}</td>
-        <td>${slot}</td>
-        <td><button onclick="DeleteAp(${appointments.indexOf(appointment)})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button></td>
-        <td><button onclick="EditAp(${appointments.indexOf(appointment)})" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Edit</button></td>
+        <td class="px-4 py-2 border border-gray-300">${name}</td>
+        <td class="px-4 py-2 border border-gray-300">${age}</td>
+        <td class="px-4 py-2 border border-gray-300">${phone}</td>
+        <td class="px-4 py-2 border border-gray-300">${address}</td>
+        <td class="px-4 py-2 border border-gray-300">${date}</td>
+        <td class="px-4 py-2 border border-gray-300">${slot}</td>
+        <td class="px-4 py-2 border border-gray-300"><button onclick="DeleteAp(${appointments.indexOf(appointment)})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button></td>
+        <td class="px-4 py-2 border border-gray-300"><button onclick="EditAp(${appointments.indexOf(appointment)})" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Edit</button></td>
         `;
 
     tableBody.appendChild(row);
