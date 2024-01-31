@@ -50,6 +50,9 @@ span {
     padding-bottom: 3rem;
     padding-top: 3rem;
 }
+.filter-input {
+    width: 30%;
+}
 
 /* Calendar CSS */
 .calendar-height {

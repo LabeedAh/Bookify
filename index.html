@@ -29,24 +29,25 @@
                     </div>
                     <div>
                         <h2 class="text-4xl mt-5">
-                            Schedule Your Appointment Today.                       </h2>
-                        <p class="mt-6 text-2xl">
+                            Schedule Your Appointment Today.
+                        </h2>
+                        <p class="mt-8 text-2xl">
                             No-cost and no-obligation consultation with a Bookify Team
                             Square specialist.
                         </p>
                         <ul class="list-outside mt-4">
                             <li class="mt-4 text-orange-500 list-disc">
-                                <p class="list-text text-xl font-light">
+                                <p class="list-text text-base font-light">
                                     Enter your contact information.
                                 </p>
                             </li>
                             <li class="mt-4 text-orange-500 list-disc">
-                                <p class="list-text text-xl">
+                                <p class="list-text text-base">
                                     Choose a date and time that's convenient for you.
                                 </p>
                             </li>
                             <li class="mt-4 text-orange-500 list-disc">
-                                <p class="list-text text-xl">
+                                <p class="list-text text-base">
                                     Meet with our specialist and discover why we're
                                     one of the nation's largest and most trusted
                                     impact bookify companies.
@@ -161,21 +162,31 @@
                 </div>
             </div>
         </div>
-        
-<!--   the filterbar start from here -->
-<div id="filterBar" class="max-w-md mx-auto p-3 rounded-lg mt-4">
-    <div class="max-w-md mx-auto p-3 rounded-lg calendar-height ">
-   <h3 class="font-bold text-center text-3xl">You can search from Here!</h3>
-   <input type="date" id="filter" class="form-input mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
- <div id="slots" class="mb-4 mt-4 text-center"></div>
- <button onclick="findCustomer()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Find Customer</button>
-</div>
-</div>
-    
-       
+
         <!-- Display table for scheduled appointments -->
         <div class="table-body">
             <h2 class="text-center mt-6 text-4xl mb-3">Appointments Database</h2>
+
+            <!--   the filterbar start from here -->
+            <div id="filterBar" class="rounded-lg mt-4">
+                <div class="mx-auto mx-3 mb-4 p-3 rounded-lg flex items-center">
+                    <input
+                        type="date"
+                        id="filter"
+                        class="form-input p-2 w-30 border rounded focus:outline-none focus:border-blue-500 filter-input"
+                    />
+            
+                    <div id="slots" class="mb-4 mt-4 text-center"></div>
+                    <button
+                        onclick="findCustomer()"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold mx-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        Find Customer
+                    </button>
+                </div>
+            </div>
+            
+
             <div class="overflow-x-auto">
                 <table
                     class="table-auto w-full border-collapse border border-gray-300"
@@ -188,11 +199,14 @@
                                 Cell Phone
                             </th>
                             <th class="px-4 py-2 border border-gray-300">Address</th>
-                            <th class="px-4 py-2 border border-gray-300 bg-yellow-300">Date</th>
+                            <th
+                                class="px-4 py-2 border border-gray-300 bg-yellow-300"
+                            >
+                                Date
+                            </th>
                             <th class="px-4 py-2 border border-gray-300">Slot</th>
                             <th class="px-4 py-2 border border-gray-300">Delete</th>
                             <th class="px-4 py-2 border border-gray-300">Edit</th>
-
                         </tr>
                     </thead>
                     <tbody id="appointmentData" class="text-center">
