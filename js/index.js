@@ -3,7 +3,7 @@ let editIndex = '';
 const form = document.getElementById("appointmentForm");
 const slotsDiv = document.getElementById("slots");
 const tableBody = document.getElementById("appointmentData");
-// let arrPackages = [];
+let arrPackages = [];
 
 function GetValue(inputName) {
     return document.getElementById(inputName).value;
