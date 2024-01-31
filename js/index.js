@@ -8,7 +8,6 @@ const tableBody = document.getElementById("appointmentData");
 function GetValue(inputName) {
     return document.getElementById(inputName).value;
 }
-
 function RenderAppointment(appointment) {
     const row = document.createElement("tr");
     const { name, age, phone, address, date, slot } = appointment;
@@ -75,6 +74,13 @@ function RenderSlots(selectedDate) {
     const availableSlots = AvailableSlots(selectedDate);
     slotsDiv.innerHTML = "";
 
+    // Check if availableSlots is empty
+    if (availableSlots.length === 0) {
+        slotsDiv.textContent = "No slots available for selected date.";
+        return;
+    }
+
+    // Loop through availableSlots and render slots
     availableSlots.forEach((slot) => {
         const input = document.createElement("input");
         input.type = "radio";
@@ -93,6 +99,7 @@ function RenderSlots(selectedDate) {
         slotsDiv.appendChild(slotContainer);
     });
 }
+
 
 // Delete Function 
 function DeleteAp(index) {
@@ -150,8 +157,11 @@ function AvailableSlots(date) {
         ["09:00 AM-10:00 AM", "10:30 AM-12:30 PM", "03:00 PM-4:00 PM"], // Friday
         [], // Saturday (off day)
     ];
-    return slotsDay[dayOfWeek];
+    
+    // Return an empty array if no slots are available for the selected day
+    return slotsDay[dayOfWeek] || [];
 }
+
 
 // Event listeners
 form.addEventListener("submit", AppointmentFormSubmit);
@@ -181,18 +191,17 @@ picker.addEventListener('input', function(e){
   }
 });
 
-// const arrPackages = appointments; // Assuming your appointments array is named 'appointments'
+function findCustomer() {
+    const selectedDate = document.getElementById('filter').value;
+    const foundCustomers = appointments.filter(customer => customer.date === selectedDate);
 
-// function findCustomer() {
-//     const dat = document.getElementById('findByDate').value;
-//     const foundCustomer = appointments.filter(appointment => appointment.date === dat);
+    if (foundCustomers.length === 0) {
+        alert('No customers found for the selected date.');
+        return;
+    }
 
-//     if (foundCustomer.length === 0) {
-//         alert('No Customer found');
-//         // Optionally, you can display all appointments if none are found
-//         PrintPackagesInfo(appointments);
-//         return;
-//     }
-
-//     RenderAppointment(foundCustomer);
-// }
+    document.getElementById("appointmentData").innerHTML = ''; // Clear existing table
+    foundCustomers.forEach(customer => {
+        RenderAppointment(customer);
+    });
+}
