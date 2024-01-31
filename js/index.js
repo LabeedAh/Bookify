@@ -191,7 +191,7 @@ picker.addEventListener('input', function(e){
   }
 });
 
-function findCustomer() {
+function FindCustomer() {
     const selectedDate = document.getElementById('filter').value;
     const foundCustomers = appointments.filter(customer => customer.date === selectedDate);
 
