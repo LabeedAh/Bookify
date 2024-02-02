@@ -24,45 +24,6 @@ function RenderAppointment(appointment, index) {
   tableBody.appendChild(row);
 }
 
-// function AppointmentFormSubmit(event) {
-//   event.preventDefault();
-//   const { name, age, phone, address, date } = form.elements;
-//   const slot = document.querySelector("input[name='slot']:checked");
-
-//   if (![name.value, age.value, phone.value, address.value, date.value, slot].every(Boolean)) {
-//     alert("Please fill in all fields and select a slot.");
-//     return;
-//   }
-
-//   const selectedDate = date.value;
-//   const selectedSlot = slot.value;
-
-//   if (bookedSlots[selectedDate] && bookedSlots[selectedDate].includes(selectedSlot)) {
-//     ShowToast("This slot is already booked for the selected date.");
-//     return;
-//   }
-
-//   const newAppointment = {
-//     name: name.value,
-//     age: age.value,
-//     phone: phone.value,
-//     address: address.value,
-//     date: selectedDate,
-//     slot: selectedSlot
-//   };
-
-//   if (editIndex !== "") {
-//     appointments[editIndex] = newAppointment;
-//     tableBody.innerHTML = ""; // Clear table
-//     appointments.forEach(RenderAppointment);
-//     editIndex = ""; // Clear editIndex
-//   } else {
-//     appointments.push(newAppointment);
-//     RenderAppointment(newAppointment, appointments.length - 1);
-//   }
-
-//   form.reset();
-// }
 function AppointmentFormSubmit(event) {
     event.preventDefault();
     const { name, age, phone, address, date } = form.elements;
@@ -95,6 +56,7 @@ function AppointmentFormSubmit(event) {
       tableBody.innerHTML = ""; // Clear table
       appointments.forEach(RenderAppointment);
       editIndex = ""; // Clear editIndex
+      ShowToast("Appointment details updated successfully.");
     } else {
       appointments.push(newAppointment);
       RenderAppointment(newAppointment, appointments.length - 1);
@@ -104,6 +66,7 @@ function AppointmentFormSubmit(event) {
       } else {
         bookedSlots[selectedDate].push(selectedSlot);
       }
+      ShowToast("Appointment scheduled successfully.");
     }
   
     form.reset();
@@ -191,7 +154,8 @@ picker.addEventListener("input", function (e) {
   if ([6, 0].includes(day)) {
     e.preventDefault();
     this.value = "";
-    alert("Weekends are off...");
+    // alert("Weekends are off...");
+    ShowToast("Weekends Are Off...");
   }
 });
 
@@ -199,7 +163,8 @@ function FindCustomer() {
   const selectedDate = document.getElementById("filter").value;
   const foundCustomers = appointments.filter((customer) => customer.date === selectedDate);
   if (foundCustomers.length === 0) {
-    alert("No customers found for the selected date.");
+    // alert("No customers found for the selected date.");
+    ShowToast("No customers found for the selected date.");
     return;
   }
   tableBody.innerHTML = ""; // Clear table
