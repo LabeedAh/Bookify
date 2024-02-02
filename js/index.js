@@ -1,11 +1,14 @@
 const appointments = [];
 let editIndex = "";
+const bookedSlots = {};
 const form = document.getElementById("appointmentForm");
 const slotsDiv = document.getElementById("slots");
 const tableBody = document.getElementById("appointmentData");
 let arrPackages = [];
+const today = new Date();
+const sevenDays = new Date(today);
 
-function RenderAppointment(appointment) {
+function RenderAppointment(appointment, index) {
   const row = document.createElement("tr");
   const { name, age, phone, address, date, slot } = appointment;
   row.innerHTML = `
@@ -15,107 +18,147 @@ function RenderAppointment(appointment) {
         <td class="px-4 py-2 border border-gray-300">${address}</td>
         <td class="px-4 py-2 border border-gray-300 bg-yellow-300">${date}</td>
         <td class="px-4 py-2 border border-gray-300">${slot}</td>
-        <td class="px-4 py-2 border border-gray-300"><button onclick="DeleteAp(${appointments.indexOf(
-          appointment
-        )})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button></td>
-        <td class="px-4 py-2 border border-gray-300"><button onclick="EditAp(${appointments.indexOf(
-          appointment
-        )})" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Edit</button></td>
+        <td class="px-4 py-2 border border-gray-300"><button onclick="DeleteApointment(${index})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button></td>
+        <td class="px-4 py-2 border border-gray-300"><button onclick="EditAppointment(${index})" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Edit</button></td>
         `;
-
   tableBody.appendChild(row);
 }
 
+// function AppointmentFormSubmit(event) {
+//   event.preventDefault();
+//   const { name, age, phone, address, date } = form.elements;
+//   const slot = document.querySelector("input[name='slot']:checked");
+
+//   if (![name.value, age.value, phone.value, address.value, date.value, slot].every(Boolean)) {
+//     alert("Please fill in all fields and select a slot.");
+//     return;
+//   }
+
+//   const selectedDate = date.value;
+//   const selectedSlot = slot.value;
+
+//   if (bookedSlots[selectedDate] && bookedSlots[selectedDate].includes(selectedSlot)) {
+//     ShowToast("This slot is already booked for the selected date.");
+//     return;
+//   }
+
+//   const newAppointment = {
+//     name: name.value,
+//     age: age.value,
+//     phone: phone.value,
+//     address: address.value,
+//     date: selectedDate,
+//     slot: selectedSlot
+//   };
+
+//   if (editIndex !== "") {
+//     appointments[editIndex] = newAppointment;
+//     tableBody.innerHTML = ""; // Clear table
+//     appointments.forEach(RenderAppointment);
+//     editIndex = ""; // Clear editIndex
+//   } else {
+//     appointments.push(newAppointment);
+//     RenderAppointment(newAppointment, appointments.length - 1);
+//   }
+
+//   form.reset();
+// }
 function AppointmentFormSubmit(event) {
-  event.preventDefault();
-
-  const { name, age, phone, address, date } = form.elements;
-  const slot = document.querySelector("input[name='slot']:checked");
-
-  if (
-    !name.value ||
-    !age.value ||
-    !phone.value ||
-    !address.value ||
-    !date.value ||
-    !slot
-  ) {
-    alert("Please fill in all fields and select a slot.");
-    return;
+    event.preventDefault();
+    const { name, age, phone, address, date } = form.elements;
+    const slot = document.querySelector("input[name='slot']:checked");
+  
+    if (![name.value, age.value, phone.value, address.value, date.value, slot].every(Boolean)) {
+      alert("Please fill in all fields and select a slot.");
+      return;
+    }
+  
+    const selectedDate = date.value;
+    const selectedSlot = slot.value;
+  
+    if (bookedSlots[selectedDate] && bookedSlots[selectedDate].includes(selectedSlot)) {
+      ShowToast("This slot is already booked for the selected date.");
+      return;
+    }
+  
+    const newAppointment = {
+      name: name.value,
+      age: age.value,
+      phone: phone.value,
+      address: address.value,
+      date: selectedDate,
+      slot: selectedSlot
+    };
+  
+    if (editIndex !== "") {
+      appointments[editIndex] = newAppointment;
+      tableBody.innerHTML = ""; // Clear table
+      appointments.forEach(RenderAppointment);
+      editIndex = ""; // Clear editIndex
+    } else {
+      appointments.push(newAppointment);
+      RenderAppointment(newAppointment, appointments.length - 1);
+      // Add the booked slot to the bookedSlots object
+      if (!bookedSlots[selectedDate]) {
+        bookedSlots[selectedDate] = [selectedSlot];
+      } else {
+        bookedSlots[selectedDate].push(selectedSlot);
+      }
+    }
+  
+    form.reset();
   }
-
-  const newAppointment = {
-    name: name.value,
-    age: age.value,
-    phone: phone.value,
-    address: address.value,
-    date: date.value,
-    slot: slot.value
-  };
-
-  // Check if we're editing an existing appointment
-  if (editIndex !== "") {
-    // Update existing appointment data
-    appointments[editIndex] = newAppointment;
-    // Re-render the updated appointment
-    document.getElementById("appointmentData").innerHTML = "";
-    appointments.forEach((appointment, index) => {
-      RenderAppointment(appointment, index);
-    });
-    // Clear editIndex
-    editIndex = "";
-  } else {
-    // Add new appointment
-    appointments.push(newAppointment);
-    RenderAppointment(newAppointment);
-  }
-}
-
+  
 function RenderSlots(selectedDate) {
-    const availableSlots = AvailableSlots(selectedDate);
-    slotsDiv.innerHTML = availableSlots.length === 0
+  const availableSlots = AvailableSlots(selectedDate);
+  slotsDiv.innerHTML =
+    availableSlots.length === 0
       ? "No slots available for selected date."
-      : availableSlots.map(slot => `
+      : availableSlots
+          .map(
+            (slot) => `
           <div class="flex items-center mb-2">
             <input type="radio" name="slot" value="${slot}">
             <label class="ml-2">${slot}</label>
           </div>
-        `).join('');
-  }  
-
-// Delete Function
-function DeleteAp(index) {
-  var a = confirm("Are you sure?");
-  if (!a) return;
-  appointments.splice(index, 1);
-  document.getElementById("appointmentData").innerHTML = "";
-  appointments.forEach((p, index) => {
-    RenderAppointment(p, index, 0);
-  });
+        `
+          )
+          .join("");
 }
 
-function EditAp(index) {
-    const appointment = appointments[index];
-    
-    // Set the value of the slot input element
-    const slotInput = document.querySelector(`input[name='slot'][value='${appointment.slot}']`);
-    if (slotInput) {
-      slotInput.checked = true;
-    }
-  
-    // Set the values of other input elements based on appointment properties
-    for (const key in appointment) {
-      if (key !== 'slot') {
-        const element = document.getElementById(key);
-        if (element) {
-          element.value = appointment[key];
-        }
+function DeleteApointment(index) {
+  const confirmation = confirm("Are you sure you want to delete this appointment?");
+  if (confirmation) {
+    const deletedAppointment = appointments.splice(index, 1)[0];
+    tableBody.innerHTML = ""; // Clear table
+    appointments.forEach(RenderAppointment);
+    // Remove slot from bookedSlots
+    const { date, slot } = deletedAppointment;
+    if (bookedSlots[date]) {
+      const index = bookedSlots[date].indexOf(slot);
+      if (index !== -1) {
+        bookedSlots[date].splice(index, 1);
       }
     }
-  
-    editIndex = index;
   }
-  
+}
+
+function EditAppointment(index) {
+  const appointment = appointments[index];
+  const slotInput = document.querySelector(`input[name='slot'][value='${appointment.slot}']`);
+  if (slotInput) {
+    slotInput.checked = true;
+  }
+  for (const key in appointment) {
+    if (key !== "slot") {
+      const element = document.getElementById(key);
+      if (element) {
+        element.value = appointment[key];
+      }
+    }
+  }
+  editIndex = index;
+}
 
 function AvailableSlots(date) {
   const dayOfWeek = new Date(date).getDay();
@@ -128,28 +171,20 @@ function AvailableSlots(date) {
     ["09:00 AM-10:00 AM", "10:30 AM-12:30 PM", "03:00 PM-4:00 PM"], // Friday
     [] // Saturday (off day)
   ];
-
-  // Return an empty array if no slots are available for the selected day
   return slotsDay[dayOfWeek] || [];
 }
 
-// Event listeners
 form.addEventListener("submit", AppointmentFormSubmit);
 document.getElementById("date").addEventListener("change", function () {
   RenderSlots(this.value);
 });
 
-// Initial setup
-const today = new Date();
-const sevenDays = new Date(today);
 sevenDays.setDate(today.getDate() + 7);
 const minDate = today.toISOString().split("T")[0];
 const maxDate = sevenDays.toISOString().split("T")[0];
-
 document.getElementById("date").setAttribute("min", minDate);
 document.getElementById("date").setAttribute("max", maxDate);
 
-//For disabeling the Weekends
 const picker = document.getElementById("date");
 picker.addEventListener("input", function (e) {
   var day = new Date(this.value).getUTCDay();
@@ -162,13 +197,21 @@ picker.addEventListener("input", function (e) {
 
 function FindCustomer() {
   const selectedDate = document.getElementById("filter").value;
-  const foundCustomers = appointments.filter(
-    (customer) => customer.date === selectedDate
-  );
+  const foundCustomers = appointments.filter((customer) => customer.date === selectedDate);
   if (foundCustomers.length === 0) {
     alert("No customers found for the selected date.");
     return;
   }
-  document.getElementById("appointmentData").innerHTML = "";
+  tableBody.innerHTML = ""; // Clear table
   foundCustomers.forEach(RenderAppointment);
+}
+
+function ShowToast(message) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
 }

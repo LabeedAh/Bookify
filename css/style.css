@@ -65,3 +65,15 @@ span {
     border: 2px solid #F05523;
     padding-bottom: 30px;
 }
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 9999;
+  }
