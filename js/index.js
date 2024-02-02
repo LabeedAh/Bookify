@@ -90,21 +90,32 @@ function RenderSlots(selectedDate) {
 }
 
 function DeleteApointment(index) {
-  const confirmation = confirm("Are you sure you want to delete this appointment?");
-  if (confirmation) {
-    const deletedAppointment = appointments.splice(index, 1)[0];
-    tableBody.innerHTML = ""; // Clear table
-    appointments.forEach(RenderAppointment);
-    // Remove slot from bookedSlots
-    const { date, slot } = deletedAppointment;
-    if (bookedSlots[date]) {
-      const index = bookedSlots[date].indexOf(slot);
-      if (index !== -1) {
-        bookedSlots[date].splice(index, 1);
+    const deleteModal = document.getElementById('deleteModal');
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    const cancelDeleteBtn = document.getElementById('cancelDelete');
+  
+    deleteModal.style.display = 'block';
+  
+    confirmDeleteBtn.onclick = function() {
+      const deletedAppointment = appointments.splice(index, 1)[0];
+      tableBody.innerHTML = ""; // Clear table
+      appointments.forEach(RenderAppointment);
+      // Remove slot from bookedSlots
+      const { date, slot } = deletedAppointment;
+      if (bookedSlots[date]) {
+        const index = bookedSlots[date].indexOf(slot);
+        if (index !== -1) {
+          bookedSlots[date].splice(index, 1);
+        }
       }
+      deleteModal.style.display = 'none';
+    }
+  
+    cancelDeleteBtn.onclick = function() {
+      deleteModal.style.display = 'none';
     }
   }
-}
+  
 
 function EditAppointment(index) {
   const appointment = appointments[index];
@@ -154,7 +165,6 @@ picker.addEventListener("input", function (e) {
   if ([6, 0].includes(day)) {
     e.preventDefault();
     this.value = "";
-    // alert("Weekends are off...");
     ShowToast("Weekends Are Off...");
   }
 });
