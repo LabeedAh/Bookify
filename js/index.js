@@ -19,8 +19,10 @@ function RenderAppointment(appointment, index) {
         <td class="px-4 py-2 border border-gray-300 bg-yellow-300">${date}</td>
         <td class="px-4 py-2 border border-gray-300">${slot}</td>
         <td class="px-4 py-2 border border-gray-300"><button onclick="DeleteApointment(${index})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button></td>
-        <td class="px-4 py-2 border border-gray-300"><button onclick="EditAppointment(${index})" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Edit</button></td>
+        <td class="px-4 py-2 border border-gray-300"><button onclick="EditAppointment(${index})" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><a href="#form">Edit</a></button></td>
         `;
+
+        
   tableBody.appendChild(row);
 }
 

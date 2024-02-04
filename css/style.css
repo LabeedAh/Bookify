@@ -8,10 +8,13 @@
 .btn-bg {
     background-color: #F05523;
 }
-
+html{
+    scroll-behavior: smooth;
+}
 body {
     font-family: "Arquitecta W00 Bold";
     color: #000000;
+
 }
 
 /* Tailwind css */
